@@ -8,7 +8,7 @@ const HeroBanner = () => {
  
 
   return (
-    <section className="relative bg-gradient-to-br from-slate-50 to-teal-50/50 overflow-hidden min-h-[calc(100vh-80px)] flex items-center">
+    <section className="relative bg-linear-to-br from-slate-50 to-teal-50/50 overflow-hidden min-h-[calc(100vh-80px)] flex items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left space-y-6 z-10">
@@ -43,7 +43,7 @@ const HeroBanner = () => {
               </Link>
             </div>
           </div>
-          <div className="lg:col-span-7 w-full h-[320px] sm:h-[450px] lg:h-[500px] relative rounded-2xl sm:rounded-[32px] overflow-hidden shadow-xl border-4 border-white bg-white">
+          <div className="lg:col-span-7 w-full h-80 sm:h-112.5 lg:h-125 relative rounded-2xl sm:rounded-[32px] overflow-hidden shadow-xl border-4 border-white bg-white">
             <HeroSilder/>
           </div>
         </div>

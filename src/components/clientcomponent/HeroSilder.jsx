@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
@@ -36,7 +37,7 @@ const HeroSilder = () => {
                 sizes="(max-w-7xl) 100vw, 700px"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-blue-900/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-blue-950/80 via-blue-900/20 to-transparent" />
             </div>
             <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 text-left text-white z-10 flex flex-col space-y-2">
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white drop-shadow-md">
