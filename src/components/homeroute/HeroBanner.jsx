@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FaCalendarCheck, FaUserMd } from "react-icons/fa";
-import HeroSilder from "../clientcomponent/HeroSilder";
+import HeroSilder from "@/components/clientcomponent/HeroSilder";
 
 const HeroBanner = () => {
  

@@ -11,7 +11,7 @@ const Stats = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight">
             Our Platform <span className="text-teal-500">By The Numbers</span>
           </h2>
-          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-slate-600 max-w-2xl mx-auto px-2 leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto px-2 leading-relaxed">
             Real-time statistics showcasing our commitment to delivering trusted
             health services.
           </p>

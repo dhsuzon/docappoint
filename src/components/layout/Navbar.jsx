@@ -43,7 +43,7 @@ const Navbar = ()=> {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-8 px-2 lg:px-4 xl:px-8">
             <Link href="/" className={linkStyle("/")}>
               Home
             </Link>
@@ -98,7 +98,7 @@ const Navbar = ()=> {
       <div
         className={`md:hidden transition-all duration-300 ease-in-out ${isOpen ? "block opacity-100" : "hidden opacity-0"}`}
       >
-        <div className="px-4 pt-2 pb-6 space-y-3 bg-white border-t border-slate-100 shadow-inner">
+        <div className="px-4 pt-2 pb-6  space-y-3 bg-white border-t border-slate-100 shadow-inner">
           <Link
             href="/"
             onClick={() => setIsOpen(false)}
