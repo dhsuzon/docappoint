@@ -4,7 +4,7 @@ export const getAllDoctors = async() => {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to fetch top doctors from server");
+        throw new Error("Failed to fetch All doctors from server");
     }
 
     return res.json();
