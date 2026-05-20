@@ -1,9 +1,13 @@
+import HeroBanner from "@/components/homeroute/HeroBanner";
 import Image from "next/image";
 
-export default function Home() {
+
+
+const Home = ()=> {
   return (
     <div>
-      <h1>hellow</h1>
+      <HeroBanner/>
     </div>
   );
 }
+export default Home;
