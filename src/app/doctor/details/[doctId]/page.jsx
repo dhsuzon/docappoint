@@ -3,9 +3,17 @@ import { auth } from "@/lib/auth";
 import { getSingleDocDetails } from "@/ulitis/getSingleDocDetails";
 import { headers } from "next/headers";
 import Image from "next/image";
-;
 import { redirect } from "next/navigation";
 import { FaClock, FaHospital, FaMapMarkerAlt, FaMedal } from "react-icons/fa";
+
+export async function generateMetadata({ params }) {
+  const { doctId } = await params;
+  const doc = await getSingleDocDetails(doctId);
+  return {
+    title: `${doc.name} | DocAppoint`,
+    description: `Book an appointment with ${doc.name}, ${doc.specialty} at ${doc.hospital}.`,
+  };
+}
 
 const Page = async ({ params }) => {
   const { doctId } = await params;
@@ -17,7 +25,7 @@ const Page = async ({ params }) => {
   });
 
   if(!session){
-    redirect("/login")
+    redirect(`/login?callbackUrl=/doctor/details/${doctId}`)
   }
 
 

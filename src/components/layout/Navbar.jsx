@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Bars, Xmark } from "@gravity-ui/icons";
 import { Avatar } from "@heroui/react";
-import { authClient } from "@/lib/auth-client"; // 🎯 Better Auth ক্লায়েন্ট ইমপোর্ট করা হলো
+import { authClient } from "@/lib/auth-client"; 
 import { toast } from "react-toastify";
 
 const Navbar = () => {
@@ -15,8 +15,7 @@ const Navbar = () => {
   const router = useRouter();
 
   const { data, isPending } = authClient.useSession();
-  console.log(data);
-
+  
   const isLoggedIn = data?.user;
 
   

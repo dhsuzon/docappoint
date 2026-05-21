@@ -1,7 +1,13 @@
 "use client";
+
+
+import { BookAppoint } from "@/ulitis/postAppoint";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 
-function AppointBook() {
+
+
+const AppointBook =()=> {
+    
   return (
     <>
       <Modal>
@@ -23,8 +29,12 @@ function AppointBook() {
               </Modal.Header>
               <Modal.Body className="p-6">
                 <Surface variant="default">
-                  <form className="flex flex-col justify-center h-auto items-center gap-4">
+                  <form
+                    className="flex flex-col justify-center h-auto items-center gap-4"
+                    onSubmit={BookAppoint}
+                  >
                     <TextField
+                     isRequired
                       className="w-full"
                       name="useremail"
                       type="email"
@@ -34,6 +44,7 @@ function AppointBook() {
                       <Input placeholder="Enter Youre email" />
                     </TextField>
                     <TextField
+                    isRequired
                       className="w-full"
                       name="doctorname"
                       type="text"
@@ -45,17 +56,19 @@ function AppointBook() {
                       <Input placeholder="Enter  Doctor Name" />
                     </TextField>
                     <TextField
+                     isRequired
                       className="w-full"
                       name="patientname"
                       type="text"
                       variant="secondary"
                     >
                       <Label className="text-base sm:text-lg capitalize">
-                        DoctorName
+                        PatientName
                       </Label>
                       <Input placeholder="Enter  Patient Name" />
                     </TextField>
                     <TextField
+                     isRequired
                       className="w-full"
                       name="gender"
                       type="text"
@@ -67,6 +80,7 @@ function AppointBook() {
                       <Input placeholder="Enter  Patient Name" />
                     </TextField>
                     <TextField
+                     isRequired
                       className="w-full"
                       name="phone"
                       type="tel"
@@ -78,6 +92,7 @@ function AppointBook() {
                       <Input placeholder="Enter your phone number" />
                     </TextField>
                     <TextField
+                     isRequired
                       className="w-full"
                       name="appointmentdate"
                       type="date"
@@ -89,6 +104,7 @@ function AppointBook() {
                       <Input placeholder="Enter Slect Date" />
                     </TextField>
                     <TextField
+                    isRequired
                       className="w-full"
                       name="appointmenttime"
                       type="time"
@@ -102,6 +118,7 @@ function AppointBook() {
                     <Modal.Footer>
                       <Button
                         slot="close"
+                        type="submit"
                         className="bg-blue-900 rounded-xl h-auto py-4 text-base sm:text-lg"
                       >
                         Booking Appointment

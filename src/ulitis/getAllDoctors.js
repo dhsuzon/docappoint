@@ -1,5 +1,7 @@
+import { API_URL } from "@/config";
+
 export const getAllDoctors = async() => {
-    const res = await fetch("http://localhost:9000/api/doctors/all", {
+    const res = await fetch(`${API_URL}/api/doctors/all`, {
         cache: "no-store",
     });
 

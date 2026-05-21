@@ -1,9 +1,7 @@
 "use client";
 
-import {  } from "@gravity-ui/icons";
 import {
   Button,
-  Description,
   FieldError,
   Form,
   Input,
@@ -13,13 +11,15 @@ import {
 import {FcGoogle} from "react-icons/fc";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
-import {useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 
 
 const LoginPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
  const OnSubmit = async(event) => {
    event.preventDefault();
@@ -33,7 +33,7 @@ const LoginPage = () => {
    })
 
    if(data) {
-    router.push("/");
+    router.push(callbackUrl);
    }
 
    if(error){

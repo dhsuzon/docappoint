@@ -1,10 +1,9 @@
 import { getAllDoctors } from "@/ulitis/getAllDoctors";
-import DocCard from "@/components/DocCard";
-import { Label, SearchField } from "@heroui/react";
+import AllAppointSearch from "@/components/clientcomponent/AllAppointSearch";
 
 export const metadata = {
-  title: "All Appointments ",
-  description: "View and  all your  doctor appointments.",
+  title: "All Appointments",
+  description: "View and search all available doctor appointments.",
 };
 
 export default async function TopDoctors() {
@@ -18,26 +17,8 @@ export default async function TopDoctors() {
               Available <span className="text-teal-500">Appointments</span>
             </h2>
           </div>
-          <div className="w-full sm:max-w-100 space-y-4">
-            <SearchField
-              fullWidth
-              name="search"
-              aria-labelledby="search"
-              className="w-full "
-            >
-              <SearchField.Group>
-                <SearchField.SearchIcon />
-                <SearchField.Input placeholder="Search Doctor Appointment" />
-                <SearchField.ClearButton />
-              </SearchField.Group>
-            </SearchField>
-          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allDoctors.map((doc) => (
-            <DocCard doc={doc} key={doc._id} />
-          ))}
-        </div>
+        <AllAppointSearch allDoctors={allDoctors} />
       </div>
     </section>
   );
