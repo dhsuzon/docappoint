@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Bars, Xmark } from "@gravity-ui/icons";
 
-const Navbar = ()=> {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -20,14 +20,15 @@ const Navbar = ()=> {
     }`;
 
   const primaryBtn =
-    "bg-blue-900 hover:bg-teal-600 text-white font-medium px-5 py-2 rounded-xl transition-all duration-300 shadow-sm";
+    "bg-blue-900 hover:bg-teal-600 text-white font-medium px-5 py-2 rounded-xl transition-all duration-300 shadow-sm cursor-pointer";
   const secondaryBtn =
-    "border border-blue-900 text-blue-900 hover:bg-blue-50 font-medium px-5 py-2 rounded-xl transition-all duration-300";
+    "border border-blue-900 text-blue-900 hover:bg-blue-50 font-medium px-5 py-2 rounded-xl transition-all duration-300 cursor-pointer";
 
   return (
     <nav className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
+          {/* লোগো সেকশন */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="bg-teal-50 p-1.5 rounded-full border border-teal-100">
               <Image
@@ -43,7 +44,8 @@ const Navbar = ()=> {
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-8 px-2 lg:px-4 xl:px-8">
+          {/* মিডল মেনু লিংক (ডেক্সটপ) */}
+          <div className="hidden md:flex items-center gap-8">
             <Link href="/" className={linkStyle("/")}>
               Home
             </Link>
@@ -58,6 +60,7 @@ const Navbar = ()=> {
             </Link>
           </div>
 
+          {/* অথ সেকশন (ডেক্সটপ) */}
           <div className="hidden md:flex items-center gap-4">
             {isLoggedIn ? (
               <div className="flex items-center gap-3">
@@ -78,6 +81,7 @@ const Navbar = ()=> {
             )}
           </div>
 
+          {/* মোবাইল মেনু টগল বাটন */}
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -85,20 +89,19 @@ const Navbar = ()=> {
               className="text-slate-600 hover:text-blue-900 focus:outline-none p-2"
               aria-label="Toggle menu"
             >
-              {isOpen ? (
-                <Xmark/>
-              ) : (
-                <Bars/>
-              )}
+              {isOpen ? <Xmark /> : <Bars />}
             </button>
           </div>
         </div>
       </div>
 
+      {/* মোবাইল রেসপন্সিভ ড্রপডাউন মেনু */}
       <div
-        className={`md:hidden transition-all duration-300 ease-in-out ${isOpen ? "block opacity-100" : "hidden opacity-0"}`}
+        className={`md:hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "block opacity-100" : "hidden opacity-0"
+        }`}
       >
-        <div className="px-4 pt-2 pb-6  space-y-3 bg-white border-t border-slate-100 shadow-inner">
+        <div className="px-4 pt-2 pb-6 space-y-3 bg-white border-t border-slate-100 shadow-inner">
           <Link
             href="/"
             onClick={() => setIsOpen(false)}
@@ -121,6 +124,7 @@ const Navbar = ()=> {
             Dashboard
           </Link>
 
+          {/* অথ সেকশন (মোবাইল) */}
           <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
             {isLoggedIn ? (
               <div className="flex items-center justify-between px-3">
@@ -154,5 +158,6 @@ const Navbar = ()=> {
       </div>
     </nav>
   );
-}
+};
+
 export default Navbar;
