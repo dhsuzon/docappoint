@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "@gravity-ui/icons";
+import {  } from "@gravity-ui/icons";
 import {
   Button,
   Description,
@@ -10,10 +10,44 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
-import { FaGoogle } from "react-icons/fa";
+import {FcGoogle} from "react-icons/fc";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import {useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
+
 
 const RegisterPage = () => {
+  const router = useRouter();
+
+ const OnSubmit = async(event) => {
+   event.preventDefault();
+   const formData = new FormData(event.currentTarget);
+   const SignupInfo = Object.fromEntries(formData.entries());
+   console.log(SignupInfo);
+  
+   const {data,error} =await authClient.signUp.email({
+    name:SignupInfo.name,
+    email:SignupInfo.email,
+    password:SignupInfo.password
+   })
+
+   if(data) {
+    router.push("/login");
+   }
+
+   if(error){
+    toast.error(error.message)
+   }
+
+
+ };
+ const SocialHandler = async() =>{
+  await authClient.signIn.social({provider:"google"})
+ };
+  
+
   return (
     <section className="min-h-screen w-screen bg-slate-50 flex items-center justify-center p-4  overflow-y-auto">
       <div className="max-w-md w-full p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-100 bg-white">
@@ -25,7 +59,7 @@ const RegisterPage = () => {
             Create an account to book your slots
           </p>
         </div>
-        <Form className="w-full flex flex-col gap-4">
+        <Form className="w-full flex flex-col gap-4" onSubmit={OnSubmit}>
           <TextField isRequired name="name" type="text" className="w-full">
             <Label className="text-base sm:text-lg font-bold text-slate-500 capitalize tracking-wider mb-1.5 block">
               Full Name
@@ -76,7 +110,7 @@ const RegisterPage = () => {
 
           <TextField
             isRequired
-            minLength={8}
+            minLength={6}
             name="password"
             type="password"
             className="w-full"
@@ -114,7 +148,6 @@ const RegisterPage = () => {
           </div>
         </Form>
 
-    
         <div className="text-center mt-5">
           <p className="text-base sm:text-lg text-slate-500 font-medium">
             Already have an account?{" "}
@@ -128,15 +161,15 @@ const RegisterPage = () => {
         </div>
 
         <div className=" border-t border-slate-100 text-center">
-          
           <Button
+            onClick={SocialHandler}
             type="button"
             variant="bordered"
             radius="xl"
             className="w-full border-slate-200 font-bold text-slate-700 bg-white hover:bg-slate-50 h-11 cursor-pointer text-base sm:text-lg"
-            startContent={<FaGoogle className="text-red-500" />}
           >
-            Continue with Google
+            {<FcGoogle className="w-5 h-5" size={20} />} Continue
+            with Google
           </Button>
         </div>
       </div>
