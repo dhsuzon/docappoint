@@ -27,11 +27,13 @@ const RegisterPage = () => {
    const SignupInfo = Object.fromEntries(formData.entries());
    console.log(SignupInfo);
   
-   const {data,error} =await authClient.signUp.email({
-    name:SignupInfo.name,
-    email:SignupInfo.email,
-    password:SignupInfo.password
-   })
+   const { data, error } = await authClient.signUp.email({
+     name: SignupInfo.name,
+     email: SignupInfo.email,
+     image: SignupInfo.image,
+     password: SignupInfo.password,
+     autoLogin: false,
+   });
 
    if(data) {
     router.push("/login");

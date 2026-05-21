@@ -2,6 +2,11 @@ import { getAllDoctors } from "@/ulitis/getAllDoctors";
 import DocCard from "@/components/DocCard";
 import { Label, SearchField } from "@heroui/react";
 
+export const metadata = {
+  title: "All Appointments ",
+  description: "View and  all your  doctor appointments.",
+};
+
 export default async function TopDoctors() {
   const allDoctors = await getAllDoctors();
   return (

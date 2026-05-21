@@ -3,14 +3,44 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Bars, Xmark } from "@gravity-ui/icons";
+import { Avatar } from "@heroui/react";
+import { authClient } from "@/lib/auth-client"; // 🎯 Better Auth ক্লায়েন্ট ইমপোর্ট করা হলো
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
-  const isLoggedIn = false;
+  const { data, isPending } = authClient.useSession();
+  console.log(data);
+
+  const isLoggedIn = data?.user;
+
+  
+  const handleLogout = async () => {
+    const toastId = toast.loading("Logging out...");
+    try {
+      await authClient.signOut();
+      toast.update(toastId, {
+        render: "Logged out successfully! 👋",
+        type: "success",
+        isLoading: false,
+        autoClose: 1500,
+      });
+      setIsOpen(false);
+      router.push("/login");
+    } catch (error) {
+      toast.update(toastId, {
+        render: "Logout failed!",
+        type: "error",
+        isLoading: false,
+        autoClose: 2000,
+      });
+    }
+  };
 
   const linkStyle = (path) =>
     `text-base font-medium transition-colors duration-300 ${
@@ -28,7 +58,7 @@ const Navbar = () => {
     <nav className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          {/* লোগো সেকশন */}
+         
           <Link href="/" className="flex items-center gap-3 group">
             <div className="bg-teal-50 p-1.5 rounded-full border border-teal-100">
               <Image
@@ -44,7 +74,7 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* মিডল মেনু লিংক (ডেক্সটপ) */}
+         
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className={linkStyle("/")}>
               Home
@@ -60,15 +90,37 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* অথ সেকশন (ডেক্সটপ) */}
+         
           <div className="hidden md:flex items-center gap-4">
-            {isLoggedIn ? (
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-teal-100 border-2 border-teal-500 flex items-center justify-center text-teal-700 font-bold uppercase shadow-sm">
-                  S
+            {isPending ? (
+             
+              <div className="w-10 h-10 rounded-full bg-slate-200 animate-pulse" />
+            ) : isLoggedIn ? (
+              <>
+                <div className="flex items-center gap-3">
+                  <Avatar className="w-10 h-10 border-2 border-teal-500 rounded-full shadow-sm">
+                    <Avatar.Image
+                      alt={data?.user?.name || "User Avatar"}
+                      src={
+                        data?.user?.image ||
+                        "https://invalid-url-to-show-fallback.com/image.jpg"
+                      }
+                      className="object-cover w-full h-full rounded-full"
+                    />
+                    <Avatar.Fallback
+                      delayMs={600}
+                      className="w-full h-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold rounded-full"
+                    >
+                      {data?.user?.name
+                        ? data.user.name.charAt(0).toUpperCase()
+                        : "NA"}
+                    </Avatar.Fallback>
+                  </Avatar>
+                  <button onClick={handleLogout} className={secondaryBtn}>
+                    Logout
+                  </button>
                 </div>
-                <button className={secondaryBtn}>Logout</button>
-              </div>
+              </>
             ) : (
               <>
                 <Link href="/login" className={secondaryBtn}>
@@ -81,7 +133,6 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* মোবাইল মেনু টগল বাটন */}
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -94,8 +145,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
-      {/* মোবাইল রেসপন্সিভ ড্রপডাউন মেনু */}
       <div
         className={`md:hidden transition-all duration-300 ease-in-out ${
           isOpen ? "block opacity-100" : "hidden opacity-0"
@@ -124,17 +173,47 @@ const Navbar = () => {
             Dashboard
           </Link>
 
-          {/* অথ সেকশন (মোবাইল) */}
+          {/* মোবাইল অথ সেকশন */}
           <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
-            {isLoggedIn ? (
-              <div className="flex items-center justify-between px-3">
-                <span className="text-sm font-medium text-slate-600">
-                  Logged in as Suzon
-                </span>
-                <button className="text-sm text-red-500 font-semibold underline">
-                  Logout
-                </button>
-              </div>
+            {isPending ? (
+              <div className="w-full h-10 bg-slate-100 rounded-lg animate-pulse" />
+            ) : isLoggedIn ? (
+              <>
+                <div className="flex items-center justify-between px-3">
+                  <div className="flex items-center gap-2">
+                    <Avatar className="w-8 h-8 border border-teal-500 rounded-full">
+                      <Avatar.Image
+                        alt={data?.user?.name || "User Avatar"}
+                        src={
+                          data?.user?.image ||
+                          "https://invalid-url-to-show-fallback.com/image.jpg"
+                        }
+                        className="object-cover w-full h-full rounded-full"
+                      />
+                      <Avatar.Fallback
+                        delayMs={600}
+                        className="w-full h-full bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold rounded-full"
+                      >
+                        {data?.user?.name
+                          ? data.user.name.charAt(0).toUpperCase()
+                          : "NA"}
+                      </Avatar.Fallback>
+                    </Avatar>
+                    <span className="text-sm font-medium text-slate-600">
+                      Logged in as{" "}
+                      <strong className="text-blue-900">
+                        {data?.user?.name}
+                      </strong>
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="text-sm text-red-500 font-semibold underline cursor-pointer hover:text-red-700"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </>
             ) : (
               <>
                 <Link
