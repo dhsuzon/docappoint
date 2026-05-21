@@ -113,6 +113,14 @@ const LoginPage = () => {
             />
             <FieldError className="text-base sm:text-lg text-red-500 mt-1 font-semibold" />
           </TextField>
+          <div className="flex justify-end w-full">
+            <Link
+              href="#"
+              className="text-sm sm:text-base text-teal-600 hover:text-blue-900 font-semibold transition-colors"
+            >
+              Forgot Password?
+            </Link>
+          </div>
           <div className="w-full mt-2">
             <Button
               type="submit"

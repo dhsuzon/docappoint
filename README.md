@@ -30,4 +30,15 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
+Open the live site or set `NEXT_PUBLIC_API_URL` in `.env` to point to your backend before running locally.
+
+## Environment Variables
+
+```env
+BETTER_AUTH_SECRET=
+NEXT_PUBLIC_BETTER_AUTH_URL=
+DB_URL=
+CLIENT_ID=
+CLIENT_SECRET=
+NEXT_PUBLIC_API_URL=
+```
