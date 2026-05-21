@@ -22,4 +22,5 @@ export const auth = betterAuth({
             clientSecret: process.env.CLIENT_SECRET
         }
     }
+
 })

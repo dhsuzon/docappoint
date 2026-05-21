@@ -1,11 +1,26 @@
-// 💡 Doctor Details UI Page (Next.js Server Component)
+import AppointBook from "@/components/clientcomponent/AppointBook";
+import { auth } from "@/lib/auth";
 import { getSingleDocDetails } from "@/ulitis/getSingleDocDetails";
+import { headers } from "next/headers";
 import Image from "next/image";
+;
+import { redirect } from "next/navigation";
 import { FaClock, FaHospital, FaMapMarkerAlt, FaMedal } from "react-icons/fa";
 
 const Page = async ({ params }) => {
   const { doctId } = await params;
   const singleDocDetails = await getSingleDocDetails(doctId);
+
+  
+  const session = await auth.api.getSession({
+    headers: await headers(), 
+  });
+
+  if(!session){
+    redirect("/login")
+  }
+
+
 
   return (
     <section className="py-12 bg-slate-50 min-h-screen">   
@@ -79,12 +94,7 @@ const Page = async ({ params }) => {
               </div>
             </div>
             <div className="mt-8">
-              <button
-                type="button"
-                className="w-full sm:w-auto px-10 py-3.5 bg-blue-900 hover:bg-teal-500 text-white font-bold text-center text-sm rounded-xl transition-colors duration-300 shadow-md block cursor-pointer"
-              >
-                Book Appointment
-              </button>
+              <AppointBook/>
             </div>
           </div>
         </div>
