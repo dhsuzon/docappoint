@@ -23,6 +23,14 @@ export const auth = betterAuth({
             clientSecret: process.env.CLIENT_SECRET
         }
     },
+    session: {
+        cookieCache: {
+            enabled: true,
+            strategy: "jwt",
+            // 7 days
+            maxAge: 7 * 24 * 60 * 60
+        }
+    },
     plugins: [jwt()]
 
 })

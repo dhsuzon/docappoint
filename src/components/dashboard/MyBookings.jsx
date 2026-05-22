@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { API_URL } from "@/config";
+import { authClient } from "@/lib/auth-client";
 
 const MyBookings = ({ userEmail }) => {
   const [bookings, setBookings] = useState([]);
@@ -19,34 +20,56 @@ const MyBookings = ({ userEmail }) => {
   }, [userEmail]);
 
   const handleDelete = async (id) => {
-    const res = await fetch(`${API_URL}/api/user/appointment/${id}`, {
-      method: "DELETE",
-    });
-    const data = await res.json();
-    if (data.deletedCount) {
-      setBookings((prev) => prev.filter((b) => b._id !== id));
-      toast.success("Appointment deleted successfully!");
+    try {
+      const { data: tokenData } = await authClient.token();
+
+      const res = await fetch(`${API_URL}/api/user/appointment/${id}`, {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`,
+        },
+      });
+      const data = await res.json();
+      if (data.deletedCount || res.ok) {
+        setBookings((prev) => prev.filter((b) => b._id !== id));
+        toast.success("Appointment deleted successfully!");
+      }
+    } catch (error) {
+      toast.error("Failed to delete appointment");
+      console.error(error);
     }
   };
-
   const handleUpdate = async (event, id) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const updatedInfo = Object.fromEntries(formData.entries());
 
-    const res = await fetch(`${API_URL}/api/user/appointment/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedInfo),
-    });
-    const data = await res.json();
-    if (data.modifiedCount) {
-      setBookings((prev) =>
-        prev.map((b) =>
-          b._id === id ? { ...b, AppInsInfo: updatedInfo } : b
-        )
-      );
-      toast.success("Appointment updated successfully!");
+    try {
+      const { data: tokenData } = await authClient.token();
+
+      const res = await fetch(`${API_URL}/api/user/appointment/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
+        body: JSON.stringify(updatedInfo),
+      });
+      const data = await res.json();
+
+      if (data.modifiedCount || res.ok) {
+        setBookings((prev) =>
+          prev.map((b) =>
+            b._id === id
+              ? { ...b, AppInsInfo: { ...b.AppInsInfo, ...updatedInfo } }
+              : b,
+          ),
+        );
+        toast.success("Appointment updated successfully!");
+      }
+    } catch (error) {
+      toast.error("Failed to update appointment");
+      console.error(error);
     }
   };
 
@@ -177,7 +200,9 @@ const MyBookings = ({ userEmail }) => {
                                 name="appointmentdate"
                                 type="date"
                                 variant="secondary"
-                                defaultValue={booking.AppInsInfo.appointmentdate}
+                                defaultValue={
+                                  booking.AppInsInfo.appointmentdate
+                                }
                               >
                                 <Label className="text-base sm:text-lg capitalize">
                                   AppointmentDate
@@ -190,7 +215,9 @@ const MyBookings = ({ userEmail }) => {
                                 name="appointmenttime"
                                 type="time"
                                 variant="secondary"
-                                defaultValue={booking.AppInsInfo.appointmenttime}
+                                defaultValue={
+                                  booking.AppInsInfo.appointmenttime
+                                }
                               >
                                 <Label className="text-base sm:text-lg capitalize">
                                   AppointmentTime
@@ -229,3 +256,4 @@ const MyBookings = ({ userEmail }) => {
 };
 
 export default MyBookings;
+ 

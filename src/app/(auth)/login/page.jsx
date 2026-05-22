@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react"; 
 import {
   Button,
   FieldError,
@@ -8,47 +9,44 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
-import {FcGoogle} from "react-icons/fc";
+import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 
-
-const LoginPage = () => {
+const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
- const OnSubmit = async(event) => {
-   event.preventDefault();
-   const formData = new FormData(event.currentTarget);
-   const SignupInfo = Object.fromEntries(formData.entries());
-   console.log(SignupInfo);
-  
-   const {data,error} =await authClient.signIn.email({
-    email:SignupInfo.email,
-    password:SignupInfo.password
-   })
+  const OnSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const SignupInfo = Object.fromEntries(formData.entries());
+    console.log(SignupInfo);
 
-   if(data) {
-    router.push(callbackUrl);
-   }
+    const { data, error } = await authClient.signIn.email({
+      email: SignupInfo.email,
+      password: SignupInfo.password,
+    });
 
-   if(error){
-    toast.error(error.message)
-   }
+    if (data) {
+      router.push(callbackUrl);
+    }
 
+    if (error) {
+      toast.error(error.message);
+    }
+  };
 
- };
- const SocialHandler = async() =>{
-  await authClient.signIn.social({provider:"google"})
- };
-  
+  const SocialHandler = async () => {
+    await authClient.signIn.social({ provider: "google" });
+  };
 
   return (
-    <section className="min-h-screen w-screen bg-slate-50 flex items-center justify-center p-4  overflow-y-auto">
+    <section className="min-h-screen w-screen bg-slate-50 flex items-center justify-center p-4 overflow-y-auto">
       <div className="max-w-md w-full p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-100 bg-white">
         <div className="flex flex-col items-center justify-center mb-6 text-center">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-blue-900 tracking-tight">
@@ -133,7 +131,7 @@ const LoginPage = () => {
 
         <div className="text-center mt-5">
           <p className="text-base sm:text-lg text-slate-500 font-medium">
-             Don’t have an account?{" "}
+            Don’t have an account?{" "}
             <Link
               href="/register"
               className="text-teal-600 hover:text-blue-900 font-bold underline transition-colors"
@@ -143,7 +141,7 @@ const LoginPage = () => {
           </p>
         </div>
 
-        <div className=" border-t border-slate-100 text-center">
+        <div className="border-t border-slate-100 text-center pt-4 mt-4">
           <Button
             onClick={SocialHandler}
             type="button"
@@ -151,7 +149,7 @@ const LoginPage = () => {
             radius="xl"
             className="w-full border-slate-200 font-bold text-slate-700 bg-white hover:bg-slate-50 h-11 cursor-pointer text-base sm:text-lg"
           >
-            {<FcGoogle className="w-5 h-5" size={20} />} Continue with Google
+            <FcGoogle className="w-5 h-5 mr-2" size={20} /> Continue with Google
           </Button>
         </div>
       </div>
@@ -159,4 +157,16 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen w-screen flex items-center justify-center bg-slate-50">
+          <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
+  );
+}
