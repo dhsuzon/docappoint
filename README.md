@@ -4,7 +4,7 @@ A full-stack doctor appointment booking platform where users can browse doctors,
 
 ## Live Site
 
-[https://docappoint.vercel.app](https://docappoint.vercel.app)
+[https://docappoint-two.vercel.app](https://docappoint-two.vercel.app)
 
 ## Features
 
