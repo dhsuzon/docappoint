@@ -27,7 +27,6 @@ export const auth = betterAuth({
         cookieCache: {
             enabled: true,
             strategy: "jwt",
-            // 7 days
             maxAge: 7 * 24 * 60 * 60
         }
     },

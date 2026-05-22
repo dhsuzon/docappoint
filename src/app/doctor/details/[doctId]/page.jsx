@@ -26,6 +26,7 @@ const Page = async ({ params }) => {
 
   if(!session){
     redirect(`/login?callbackUrl=/doctor/details/${doctId}`)
+    
   }
 
 
