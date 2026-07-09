@@ -47,7 +47,6 @@ Follow these steps to run the application on your local machine:
     1. Navigate to backend: cd docappointment_server
     2. Install dependencies: npm install
     3. Create a .env file in the root and add
-  
    ```
           PORT=9000
           CLIENT_URL=http://localhost:3000
@@ -59,14 +58,13 @@ Follow these steps to run the application on your local machine:
     1. Navigate to frontend: cd ../docappoint
     2. Install dependencies: npm install
     3. Create a .env file in the root and add
-        ```env
+  ```
           BETTER_AUTH_SECRET=Vv0iAmBsCnkExjr0VnT0I9aKhA4KIY6e
           NEXT_PUBLIC_API_URL=http://localhost:9000
           NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
           DB_URL=your_mongo_db_url
           CLIENT_ID=your_client_id
           CLIENT_SECRET=your_client_secret
-        
-
+  ```
      4. npm run dev
       
