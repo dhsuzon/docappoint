@@ -35,10 +35,11 @@
 Follow these steps to run the application on your local machine:
 
 ### Step 1: Clone Repositories
-
-[https://github.com/dhsuzon/docappoint.git](https://github.com/dhsuzon/docappoint.git) 
-
-[https://github.com/dhsuzon/docappointment_server.git](https://github.com/dhsuzon/docappointment_server.git)
+```
+https://github.com/dhsuzon/docappoint.git
+```
+```
+ https://github.com/dhsuzon/docappointment_server.git
 ```
 
 ### Step 2: Backend Setup & Installation
