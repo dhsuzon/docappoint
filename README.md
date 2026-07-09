@@ -47,10 +47,12 @@ Follow these steps to run the application on your local machine:
     1. Navigate to backend: cd docappointment_server
     2. Install dependencies: npm install
     3. Create a .env file in the root and add
-       ```
+  
+   ```
           PORT=9000
           CLIENT_URL=http://localhost:3000
           DB_URL=your_mongo_db_url
+   ```
     4. Start server: npm start
 
 ### Step 3: Frontend Setup & Installation
