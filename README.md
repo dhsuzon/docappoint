@@ -39,7 +39,6 @@ Follow these steps to run the application on your local machine:
 git clone [https://github.com/dhsuzon/docappoint.git](https://github.com/dhsuzon/docappoint.git)
 git clone [https://github.com/dhsuzon/docappointment_server.git](https://github.com/dhsuzon/docappointment_server.git)```
 
-
 ### Step 2: Backend Setup & Installation
     1. Navigate to backend: cd docappointment_server
     2. Install dependencies: npm install
